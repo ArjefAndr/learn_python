@@ -27,16 +27,16 @@ def save_history_to_file(history, fn="calc_console_log.txt"):
 def dec_separator(a):
     if isinstance(a, (int, float)):
         return(a)
-    
+
     locale.setlocale(locale.LC_ALL, "")
     locale_info = locale.localeconv()
     dec_p = locale_info["decimal_point"]
 
     if dec_p == '.':
         a = a.replace(',',dec_p)
+            
     else:    
         a = a.replace('.', dec_p)
-
     return locale.atof(a) 
 
 def only_operator(a, history = None):
@@ -75,6 +75,9 @@ def only_num(input_t, history = None):
 def is_finite_number(x):
     """Проверяет, что значение — конечное число (не inf и не nan)."""
     return isinstance(x, (int, float)) and math.isfinite(x)
+
+
+
 
 
 # Список операций для меню: (номер, название, символ оператора)
@@ -121,6 +124,8 @@ def input_number(prompt, history):
         a = only_num(input(prompt), history)
         if a in ('q', 'h'):
             return a
+        if a is None:
+            continue
         num = dec_separator(a)
         if not is_finite_number(num):
             print('Слишком большое или некорректное число, повторите ввод')
